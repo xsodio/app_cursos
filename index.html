@@ -1,47 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor de Video</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; text-align: center; }
-        h1 { color: #2c3e50; }
-        ul { list-style-type: none; padding: 0; display: inline-block; text-align: left; }
-        li { margin-bottom: 10px; }
-        a { color: #3498db; text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
-        video { width: 80%; max-width: 800px; margin-top: 20px; border: 2px solid #2c3e50; border-radius: 10px; }
-        button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #3498db; color: white; cursor: pointer; }
-        button:hover { background-color: #2980b9; }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: inline-block;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        iframe {
+            width: 80%;
+            max-width: 800px;
+            height: 450px;
+            margin-top: 20px;
+            border: 2px solid #2c3e50;
+            border-radius: 10px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Curso de Electr�nica B�sica</h1>
-    <video id="videoPlayer" controls></video>
+    <h1>Curso de Electrónica Básica</h1>
+    <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
     <br>
     <button id="prevButton">Anterior</button>
     <button id="nextButton">Siguiente</button>
-    <ul id="videoList">
-        <!-- Los enlaces se manejar�n din�micamente -->
-    </ul>
+    <ul id="videoList"></ul>
 
     <script>
         // Lista de URLs de video
         const videos = [
-            { title: "1 � Introducci�n y Herramientas", url: "https://videopress.com/embed/eVTW95EW" },
-            { title: "2 � Herramientas el�ctricas y mult�metro", url: "https://videopress.com/embed/OsvgV0vW" },
-            { title: "3 � Soldadura", url: "https://videopress.com/embed/J2hhR8sL" },
-            { title: "4 � Fuente regulada", url: "https://videopress.com/embed/WDdopNTA" },
-            { title: "5 � Microscopio", url: "https://videopress.com/embed/ulG2P1Gr" }
-            // Agrega m�s videos seg�n sea necesario
+            { title: "1 – Introducción y Herramientas", url: "https://videopress.com/embed/eVTW95EW?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "2 – Herramientas eléctricas y multímetro", url: "https://videopress.com/embed/OsvgV0vW?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "3 – Soldadura", url: "https://videopress.com/embed/J2hhR8sL?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "4 – Fuente regulada", url: "https://videopress.com/embed/WDdopNTA?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "5 – Microscopio", url: "https://videopress.com/embed/ulG2P1Gr?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "6 – Fuente de alimentación – Parte 1", url: "https://videopress.com/embed/gLcgZjIC?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "7 – Fuente de alimentación – Parte 2", url: "https://videopress.com/embed/bSUZeYUV?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "8 – Fuentes de alimentación – Parte 3", url: "https://videopress.com/embed/hjYi987Q?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "8 – Tipos de componentes", url: "https://videopress.com/embed/MUpHEHS5?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "9 – Fuentes de alimentación – Parte 4", url: "https://videopress.com/embed/Yszg2lsc?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "9.1 – Resistencias", url: "https://videopress.com/embed/aHNrjSgV?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "10 – Agrupamiento – Parte 1", url: "https://videopress.com/embed/uwwRXOy7?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "11 – Agrupamiento – Parte 2", url: "https://videopress.com/embed/SzvkwLka?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "12 – Agrupamiento – Parte 3", url: "https://videopress.com/embed/wiJsDM6r?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "13 – Potenciómetros – Parte 1", url: "https://videopress.com/embed/y3C5yE1g?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "14 – Potenciómetros – Parte 2", url: "https://videopress.com/embed/pZDGSRLc?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "15 – Potenciómetros – Parte 3", url: "https://videopress.com/embed/PSFS83Ch?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "16 – Potenciómetros – Parte 4", url: "https://videopress.com/embed/Mo83Blu1?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "17 – Capacitor – Condensador – Parte 1", url: "https://videopress.com/embed/3Yi0vlOo?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "18 – Capacitor – Condensador – Parte 2", url: "https://videopress.com/embed/HsuSJoKU?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "19 – Capacitor – Condensador – Parte 3", url: "https://videopress.com/embed/sqJsiTCG?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "20 – Capacitor – Condensador – Parte 4", url: "https://videopress.com/embed/IVoscqzc?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "21 – Símbolos eléctricos", url: "https://videopress.com/embed/ZE40QAx7?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "22 – Diodo – Parte 1", url: "https://videopress.com/embed/NOKkhBdG?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "23 – Diodo – Parte 2", url: "https://videopress.com/embed/g4sKl5KG?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "24 – Diodo – Parte 3", url: "https://videopress.com/embed/bvXedG3Q?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "25 – Diodo – Parte 4", url: "https://videopress.com/embed/B1RzQBAE?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "26 – Diodo – Parte 5", url: "https://videopress.com/embed/6pQ6ebNH?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "27 – Diodo – Parte 6", url: "https://videopress.com/embed/DtRnoWfn?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "28 – Diodo – Parte 7", url: "https://videopress.com/embed/lkkEv6Y4?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "29 – Diodo – Parte 8", url: "https://videopress.com/embed/hoGOaKS6?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "30 – Transistor – Parte 1", url: "https://videopress.com/embed/Ru2BvLta?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "31 – Transistor – Parte 2", url: "https://videopress.com/embed/eASeJi1T?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "32 – Transistor – Parte 3", url: "https://videopress.com/embed/SQ1G5HiA?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "33 – Transistor – Parte 4", url: "https://videopress.com/embed/axeXQ97j?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "34 – Transistor – Parte 5", url: "https://videopress.com/embed/otuIhU0P?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "35 – Transistor – Parte 6", url: "https://videopress.com/embed/kxZa2rQ2?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "36 – Tiristor – Parte 1", url: "https://videopress.com/embed/CIYgnGlx?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "37 – Tiristor – Parte 2", url: "https://videopress.com/embed/IGKlF6O0?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "38 – Fusible – Parte 1", url: "https://videopress.com/embed/buCaknlN?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "39 – Fusible – Parte 2", url: "https://videopress.com/embed/U6OKJdI1?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "40 – Bobina – Parte 1", url: "https://videopress.com/embed/YwkaSDIf?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "41 – Bobina – Parte 2", url: "https://videopress.com/embed/yptApulQ?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "42 – Bobina – Parte 3", url: "https://videopress.com/embed/PGUViXMx?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "43 – Bobina – Parte 4", url: "https://videopress.com/embed/7HJt91PK?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "44 – Bobina – Parte 5", url: "https://videopress.com/embed/Ki1tFZFr?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "45 – Relé – Relay – Parte 1", url: "https://videopress.com/embed/AYjtuD5N?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "46 – Relé – Relay – Parte 2", url: "https://videopress.com/embed/dBCyxohe?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "47 – Relé – Relay – Parte 3", url: "https://videopress.com/embed/z9FZg7UY?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "48 – Relé – Relay – Parte 4", url: "https://videopress.com/embed/fKXxQMnF?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "49 – Relé – Relay – Parte 5", url: "https://videopress.com/embed/s6SAVVnL?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "50 – Relé – Relay – Parte 6", url: "https://videopress.com/embed/yNAsRzfn?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "51 – Relé – Relay – Parte 7", url: "https://videopress.com/embed/0uIX96tz?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "52 – Optoacoplador – Parte 1", url: "https://videopress.com/embed/oSjgcK6b?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "53 – Optoacoplador – Parte 2", url: "https://videopress.com/embed/fIde2bne?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "54 – Osciladores – Parte 1", url: "https://videopress.com/embed/MVsg4v7P?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "55 –978 Osciladores – Parte 2", url: "https://videopress.com/embed/bfJlhaPH?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "56 – Circuito Integrado", url: "https://videopress.com/embed/ZhIFasfB?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "57 – Batería", url: "https://videopress.com/embed/rBgr7LUo?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "58 – Circuitos", url: "https://videopress.com/embed/JAq2ulPE?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "59 – Partes de un circuito – Parte 1", url: "https://videopress.com/embed/bgf28rlx?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "60 – Partes de un circuito – Parte 2", url: "https://videopress.com/embed/LbMbMP5Q?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "61 – Masa – Parte 1", url: "https://videopress.com/embed/FZEwU1yA?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "62 – Masa – Parte 2", url: "https://videopress.com/embed/NHieZU72?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "63 – Fuentes – Parte 1", url: "https://videopress.com/embed/pMouW6w4?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "64 – Fuentes – Parte 2", url: "https://videopress.com/embed/SGigCP0l?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "65 – Fuentes – Parte 3", url: "https://videopress.com/embed/t27uQik8?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" }
         ];
 
         const videoPlayer = document.getElementById("videoPlayer");
         const videoList = document.getElementById("videoList");
         let currentVideoIndex = 0;
 
-        // Cargar la lista de videos en la p�gina
+        // Cargar la lista de videos en la página
         videos.forEach((video, index) => {
             const li = document.createElement("li");
             const link = document.createElement("a");
@@ -56,7 +163,6 @@
         function loadVideo(index) {
             currentVideoIndex = index;
             videoPlayer.src = videos[currentVideoIndex].url;
-            videoPlayer.play();
         }
 
         // Pasar al siguiente video
@@ -77,11 +183,9 @@
         document.getElementById("nextButton").addEventListener("click", nextVideo);
         document.getElementById("prevButton").addEventListener("click", prevVideo);
 
-        // Cambiar autom�ticamente al siguiente video cuando termine el actual
-        videoPlayer.addEventListener("ended", nextVideo);
-
         // Cargar el primer video al iniciar
         loadVideo(currentVideoIndex);
     </script>
 </body>
+
 </html>
