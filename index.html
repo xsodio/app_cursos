@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; text-align: center; }
+        h1 { color: #2c3e50; }
+        ul { list-style-type: none; padding: 0; display: inline-block; text-align: left; }
+        li { margin-bottom: 10px; }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        video { width: 80%; max-width: 800px; margin-top: 20px; border: 2px solid #2c3e50; border-radius: 10px; }
+        button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #3498db; color: white; cursor: pointer; }
+        button:hover { background-color: #2980b9; }
+    </style>
+</head>
+<body>
+    <h1>Curso de Electrónica Básica</h1>
+    <video id="videoPlayer" controls></video>
+    <br>
+    <button id="prevButton">Anterior</button>
+    <button id="nextButton">Siguiente</button>
+    <ul id="videoList">
+        <!-- Los enlaces se manejarán dinámicamente -->
+    </ul>
+
+    <script>
+        // Lista de URLs de video
+        const videos = [
+            { title: "1 – Introducción y Herramientas", url: "https://videopress.com/embed/eVTW95EW" },
+            { title: "2 – Herramientas eléctricas y multímetro", url: "https://videopress.com/embed/OsvgV0vW" },
+            { title: "3 – Soldadura", url: "https://videopress.com/embed/J2hhR8sL" },
+            { title: "4 – Fuente regulada", url: "https://videopress.com/embed/WDdopNTA" },
+            { title: "5 – Microscopio", url: "https://videopress.com/embed/ulG2P1Gr" }
+            // Agrega más videos según sea necesario
+        ];
+
+        const videoPlayer = document.getElementById("videoPlayer");
+        const videoList = document.getElementById("videoList");
+        let currentVideoIndex = 0;
+
+        // Cargar la lista de videos en la página
+        videos.forEach((video, index) => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = "#";
+            link.textContent = video.title;
+            link.onclick = () => loadVideo(index);
+            li.appendChild(link);
+            videoList.appendChild(li);
+        });
+
+        // Cargar el video actual
+        function loadVideo(index) {
+            currentVideoIndex = index;
+            videoPlayer.src = videos[currentVideoIndex].url;
+            videoPlayer.play();
+        }
+
+        // Pasar al siguiente video
+        function nextVideo() {
+            if (currentVideoIndex < videos.length - 1) {
+                loadVideo(currentVideoIndex + 1);
+            }
+        }
+
+        // Pasar al video anterior
+        function prevVideo() {
+            if (currentVideoIndex > 0) {
+                loadVideo(currentVideoIndex - 1);
+            }
+        }
+
+        // Eventos de botones
+        document.getElementById("nextButton").addEventListener("click", nextVideo);
+        document.getElementById("prevButton").addEventListener("click", prevVideo);
+
+        // Cambiar automáticamente al siguiente video cuando termine el actual
+        videoPlayer.addEventListener("ended", nextVideo);
+
+        // Cargar el primer video al iniciar
+        loadVideo(currentVideoIndex);
+    </script>
+</body>
+</html>
