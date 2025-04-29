@@ -48,7 +48,7 @@
         }
 
         button {
-            margin: 10px;
+            margin: 0px;
             padding: 10px 20px;
             font-size: 16px;
             border: none;
@@ -61,15 +61,23 @@
         button:hover {
             background-color: #2980b9;
         }
+
+
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
 <body>
     <h1>Curso de Electrónica Básica</h1>
     <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
-    <br>
-    <button id="prevButton">Anterior</button>
-    <button id="nextButton">Siguiente</button>
+    <div class="button-container">
+        <button id="prevButton">Anterior</button>
+        <button id="nextButton">Siguiente</button>
+    </div>
     <ul id="videoList"></ul>
 
     <script>
@@ -131,7 +139,7 @@
             { title: "52 – Optoacoplador – Parte 1", url: "https://videopress.com/embed/oSjgcK6b?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
             { title: "53 – Optoacoplador – Parte 2", url: "https://videopress.com/embed/fIde2bne?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
             { title: "54 – Osciladores – Parte 1", url: "https://videopress.com/embed/MVsg4v7P?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
-            { title: "55 –978 Osciladores – Parte 2", url: "https://videopress.com/embed/bfJlhaPH?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "55 – Osciladores – Parte 2", url: "https://videopress.com/embed/bfJlhaPH?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
             { title: "56 – Circuito Integrado", url: "https://videopress.com/embed/ZhIFasfB?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
             { title: "57 – Batería", url: "https://videopress.com/embed/rBgr7LUo?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
             { title: "58 – Circuitos", url: "https://videopress.com/embed/JAq2ulPE?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
@@ -144,47 +152,59 @@
             { title: "65 – Fuentes – Parte 3", url: "https://videopress.com/embed/t27uQik8?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" }
         ];
 
+        let currentIndex = 0; // Índice del video actual
+
         const videoPlayer = document.getElementById("videoPlayer");
         const videoList = document.getElementById("videoList");
-        let currentVideoIndex = 0;
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
 
-        // Cargar la lista de videos en la página
-        videos.forEach((video, index) => {
-            const li = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = "#";
-            link.textContent = video.title;
-            link.onclick = () => loadVideo(index);
-            li.appendChild(link);
-            videoList.appendChild(li);
+        // Función para cargar un video en el iframe
+        function loadVideo(index) {
+            videoPlayer.src = videos[index].url;
+            updateButtons();
+        }
+
+        // Actualizar estado de los botones
+        function updateButtons() {
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === videos.length - 1;
+        }
+
+        // Inicializar lista de videos
+        function initializeVideoList() {
+            videos.forEach((video, index) => {
+                const li = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = "#";
+                link.textContent = video.title;
+                link.addEventListener("click", () => {
+                    currentIndex = index;
+                    loadVideo(currentIndex);
+                });
+                li.appendChild(link);
+                videoList.appendChild(li);
+            });
+        }
+
+        // Event Listeners para los botones
+        prevButton.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadVideo(currentIndex);
+            }
         });
 
-        // Cargar el video actual
-        function loadVideo(index) {
-            currentVideoIndex = index;
-            videoPlayer.src = videos[currentVideoIndex].url;
-        }
-
-        // Pasar al siguiente video
-        function nextVideo() {
-            if (currentVideoIndex < videos.length - 1) {
-                loadVideo(currentVideoIndex + 1);
+        nextButton.addEventListener("click", () => {
+            if (currentIndex < videos.length - 1) {
+                currentIndex++;
+                loadVideo(currentIndex);
             }
-        }
+        });
 
-        // Pasar al video anterior
-        function prevVideo() {
-            if (currentVideoIndex > 0) {
-                loadVideo(currentVideoIndex - 1);
-            }
-        }
-
-        // Eventos de botones
-        document.getElementById("nextButton").addEventListener("click", nextVideo);
-        document.getElementById("prevButton").addEventListener("click", prevVideo);
-
-        // Cargar el primer video al iniciar
-        loadVideo(currentVideoIndex);
+        // Inicializar aplicación
+        initializeVideoList();
+        loadVideo(currentIndex);
     </script>
 </body>
 
