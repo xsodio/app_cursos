@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparación de Equipos de Audio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: inline-block;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        iframe {
+            width: 80%;
+            max-width: 800px;
+            height: 450px;
+            margin-top: 20px;
+            border: 2px solid #2c3e50;
+            border-radius: 10px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .button-container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Reparación de Equipos de Audio</h1>
+    <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
+    <div class="button-container">
+        <button id="prevButton">Anterior</button>
+        <button id="nextButton">Siguiente</button>
+    </div>
+    <ul id="videoList"></ul>
+
+    <script>
+        // Lista de videos
+        const videos = [
+            { title: "1", url: "https://videopress.com/embed/PPshUNuC?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "2", url: "https://videopress.com/embed/5xB6NSLv?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "3", url: "https://videopress.com/embed/XWsOtFNM?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "4", url: "https://videopress.com/embed/8xlPWtpz?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "5", url: "https://videopress.com/embed/5R0B6dpg?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "6", url: "https://videopress.com/embed/zrQZGaWr?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "7", url: "https://videopress.com/embed/wmhKdfSk?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" },
+            { title: "8", url: "https://videopress.com/embed/xRlTbEF3?cover=1&autoPlay=0&controls=1&loop=0&muted=0&persistVolume=1&playsinline=0&preloadContent=metadata&useAverageColor=1&hd=1" }
+        ];
+
+        let currentIndex = 0; // Índice del video actual
+
+        const videoPlayer = document.getElementById("videoPlayer");
+        const videoList = document.getElementById("videoList");
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+
+        // Función para cargar un video en el iframe
+        function loadVideo(index) {
+            videoPlayer.src = videos[index].url;
+            updateButtons();
+        }
+
+        // Actualizar estado de los botones
+        function updateButtons() {
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === videos.length - 1;
+        }
+
+        // Inicializar lista de videos
+        function initializeVideoList() {
+            videos.forEach((video, index) => {
+                const li = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = "#";
+                link.textContent = video.title;
+                link.addEventListener("click", () => {
+                    currentIndex = index;
+                    loadVideo(currentIndex);
+                });
+                li.appendChild(link);
+                videoList.appendChild(li);
+            });
+        }
+
+        // Event Listeners para los botones
+        prevButton.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadVideo(currentIndex);
+            }
+        });
+
+        nextButton.addEventListener("click", () => {
+            if (currentIndex < videos.length - 1) {
+                currentIndex++;
+                loadVideo(currentIndex);
+            }
+        });
+
+        // Inicializar aplicación
+        initializeVideoList();
+        loadVideo(currentIndex);
+    </script>
+</body>
+
+</html>
