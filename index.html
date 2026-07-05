@@ -36,14 +36,22 @@
     border-bottom:3px solid var(--olive);
     background:linear-gradient(180deg,var(--white),var(--paper));
   }
-  .doc-head-inner{
-    max-width:860px;
-    margin:0 auto;
-    padding:36px 8vw 32px;
-    display:flex;
-    align-items:flex-start;
-    gap:26px;
-  }
+  
+.doc-head-inner img {
+    /
+    width: 200px;  
+    height: 200px;
+    
+    
+    object-fit: contain; 
+
+    max-width: 100%;
+}
+
+/* Opcional: Centrar el logo y el texto si el logo es muy grande */
+.doc-head-inner {
+    align-items: center; /* Centrado vertical con respecto al texto */
+}
   header.doc-head img{
     width:76px;
     height:76px;
