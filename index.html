@@ -5,236 +5,380 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Informe del Proyecto — Quemador de Aceite</title>
 <style>
+  /* NUEVA PALETA DE COLORES PREMIUM - Manteniendo la identidad pero más vibrante */
   :root{
-    --paper:#FCFBF9;
-    --white:#FFFFFF;
-    --ink:#2B302C;
-    --ink-soft:#5A625C;
-    --olive:#4A5D4E;
-    --olive-dark:#354438;
-    --petroleum:#204051;
-    --green-soft:#E8F0E8;
-    --green-border:#A3C1A3;
-    --line:#E1E6E2;
-    --real-tag:#3B523B;
+    --bg-main: #FFFFFF; /* Fondo blanco puro para limpieza */
+    --bg-soft: #F4F7F6; /* Fondo secundario muy suave */
+    --ink-main: #1A202C; /* Negro azulado para texto principal */
+    --ink-soft: #718096; /* Gris para texto secundario */
+    
+    --primary: #0E7490; /* Cian/Petróleo vibrante */
+    --primary-dark: #155E75; 
+    --primary-light: #ECFEFF;
+
+    --secondary: #166534; /* Verde orgánico vibrante */
+    --secondary-light: #DCFCE7;
+    --secondary-tag: #14532D;
+
+    --status-real-bg: #D1FAE5;
+    --status-real-text: #065F46;
+    --status-pending-bg: #E2E8F0;
+    --status-pending-text: #475569;
+
+    --border: #E2E8F0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    /* CAMBIO DE FUENTE GLOBAL A SANS-SERIF MODERNA */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   }
-  *{box-sizing:border-box;}
+
+  *{
+    box-sizing:border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body{
     margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
-    line-height:1.65;
-  }
-  .utility{
-    font-family:"SF Mono","Consolas","Menlo",monospace;
-    letter-spacing:.03em;
+    background:var(--bg-soft);
+    color:var(--ink-main);
+    font-family: var(--font-family);
+    line-height:1.7; /* Aumentado ligeramente para legibilidad */
+    font-size: 16px;
   }
 
-  /* HEADER — ahora comparte el mismo contenedor de 860px que <main>, así los bordes izquierdos coinciden siempre */
+  /* HEADER — Rediseñado como panel premium */
   header.doc-head{
-    border-bottom:3px solid var(--olive);
-    background:linear-gradient(180deg,var(--white),var(--paper));
+    background: var(--bg-main);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
   }
-  
-.doc-head-inner img {
-    width: 400px;  
-    height: 400px;
-    object-fit: contain; 
-    max-width: 100%;
-    max-width:860px;
+
+  .doc-head-inner{
+    max-width:1000px; /* Un poco más ancho para dar aire */
     margin:0 auto;
-    padding:36px 8vw 32px;
+    padding:48px 40px; /* Más padding */
     display:flex;
-    align-items:flex-start;
-    gap:26px;
-    align-items: center; 
-}
+    align-items:center; /* Centrado vertical */
+    gap:32px;
+  }
+
   header.doc-head img{
-    width:76px;
-    height:76px;
+    width:200px; /* Ligeramente más grande */
+    height:200px;
     object-fit:contain;
     background:#fff;
-    border-radius:8px;
-    border:1px solid var(--line);
-    padding:6px;
+    border-radius:12px; /* Más redondeado */
+    border:1px solid var(--border);
+    padding:8px;
     flex-shrink:0;
-  }
-  #current-date{
-    font-size:.8rem;
-    color:var(--ink-soft);
-    margin:0 0 10px;
-  }
-  .school-block{
-    font-family:sans-serif;
-    min-width:0;
-  }
-  .school-name{
-    font-size:.76rem;
-    text-transform:uppercase;
-    letter-spacing:.09em;
-    color:var(--ink-soft);
-    margin:0 0 10px;
-  }
-  .doc-title{
-    margin:0;
-    font-size:2.15rem;
-    color:var(--olive-dark);
-    line-height:1.22;
-  }
-  .doc-subtitle{
-    margin:12px 0 0;
-    font-style:italic;
-    color:var(--ink-soft);
-    font-size:1.05rem;
-    line-height:1.5;
-  }
-  .art-name{
-    display:inline-block;
-    margin-top:16px;
-    background:var(--green-soft);
-    color:var(--petroleum);
-    border:1px solid var(--green-border);
-    padding:5px 14px;
-    border-radius:20px;
-    font-size:.78rem;
-    letter-spacing:.02em;
-    font-weight:600;
+    box-shadow: var(--shadow-sm);
   }
 
-  main{
-    max-width:860px;
-    margin:0 auto;
-    padding:40px 8vw 120px;
-  }
-  #indice{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:24px 28px;
-    margin-bottom:48px;
-  }
-  #indice h2{
-    font-family:sans-serif;
+  #current-date{
+    font-family: var(--font-mono); /* Mantenemos toque técnico */
     font-size:.85rem;
-    text-transform:uppercase;
-    letter-spacing:.1em;
-    color:var(--petroleum);
-    margin:0 0 14px;
+    color:var(--primary);
+    margin:0 0 12px;
+    font-weight: 600;
   }
+
+  .school-block{
+    min-width:0;
+    flex: 1;
+  }
+
+  .school-name{
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.15em; /* Más espaciado */
+    color:var(--ink-soft);
+    margin:0 0 12px;
+    font-weight: 600;
+  }
+
+  .doc-title{
+    margin:0;
+    font-size:2.8rem; /* Más grande e imponente */
+    color:var(--ink-main);
+    line-height:1.1;
+    font-weight: 800; /* Extra bold */
+    letter-spacing: -0.02em;
+  }
+
+  .doc-subtitle{
+    margin:12px 0 0;
+    color:var(--ink-soft);
+    font-size:1.25rem; /* Más grande */
+    font-weight: 400;
+    font-style: normal; /* Menos cursiva, más moderno */
+  }
+
+  .art-name{
+    display:inline-block;
+    margin-top:20px;
+    background:var(--secondary-light);
+    color:var(--secondary-tag);
+    border:1px solid rgba(22, 101, 52, 0.2);
+    padding:6px 16px;
+    border-radius:20px;
+    font-size:.85rem;
+    letter-spacing:.02em;
+    font-weight:700;
+  }
+
+  /* MAIN CONTENT AREA */
+  main{
+    max-width:860px; /* Mantenemos ancho de lectura óptimo */
+    margin:0 auto;
+    padding:60px 40px 120px; /* Más aire arriba */
+  }
+
+  /* INDICE — Rediseñado como tarjeta de navegación modern */
+  #indice{
+    background:var(--bg-main);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:32px;
+    margin-bottom:60px;
+    box-shadow: var(--shadow-md);
+  }
+
+  #indice h2{
+    font-size:1rem;
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    color:var(--primary);
+    margin:0 0 24px;
+    font-weight: 700;
+    border: none;
+    padding: 0;
+  }
+
   #indice ol{
     margin:0;
-    padding-left:22px;
-    columns:1;
+    padding:0;
+    list-style: none; /* Quitamos números antiguos */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid moderno */
+    gap: 12px 24px;
   }
-  #indice li{margin-bottom:8px;}
+
+  #indice li{
+    margin-bottom:0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  #indice li:last-child {
+      border-bottom: none;
+  }
+
   #indice a{
-    color:var(--ink);
+    color:var(--ink-main);
     text-decoration:none;
-    border-bottom:1px dotted var(--ink-soft);
+    font-weight: 500;
+    transition: color 0.2s ease;
+    flex: 1;
   }
-  #indice a:hover{color:var(--olive-dark);}
+
+  #indice a:hover{
+    color:var(--primary);
+  }
+
+  /* STATUS TAGS — Más limpios y contrastados */
   .status-tag{
-    font-family:sans-serif;
-    font-size:.65rem;
+    font-size:.7rem;
     text-transform:uppercase;
     letter-spacing:.08em;
-    padding:2px 8px;
-    border-radius:20px;
-    margin-left:8px;
-    vertical-align:middle;
+    padding:4px 10px;
+    border-radius:6px; /* Menos redondeado, más "chip" tech */
+    margin-left:12px;
+    font-weight: 700;
   }
-  .status-tag.real{background:#E2EFE2;color:var(--real-tag);}
-  .status-tag.pending{background:#F0F4F1;color:var(--ink-soft);}
+  .status-tag.real{background:var(--status-real-bg);color:var(--status-real-text);}
+  .status-tag.pending{background:var(--status-pending-bg);color:var(--status-pending-text);}
+
+  /* SECTIONS — Contenedores más claros */
   section.block{
-    margin-bottom:52px;
-    scroll-margin-top:24px;
+    margin-bottom:64px;
+    scroll-margin-top:40px;
+    background: var(--bg-main);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
   }
+
   section.block h2{
-    font-size:1.5rem;
-    color:var(--olive-dark);
-    border-bottom:2px solid var(--line);
-    padding-bottom:8px;
-    margin-bottom:18px;
+    font-size:2rem;
+    color:var(--ink-main);
+    border-bottom: 4px solid var(--secondary-light); /* Subrayado grueso moderno */
+    display: inline-block; /* Solo ancho del texto */
+    padding-bottom:4px;
+    margin: 0 0 32px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
+
   section.block h3{
-    font-size:1.05rem;
-    color:var(--petroleum);
-    margin:22px 0 10px;
+    font-size:1.4rem;
+    color:var(--primary);
+    margin:32px 0 16px;
+    font-weight: 700;
   }
+  
+  section.block p {
+      margin: 0 0 20px;
+      color: #334155; /* Un gris ligeramente más suave para bloques largos */
+  }
+
+  /* PENDING BOX — Más llamativa */
   .pending-box{
-    background:var(--green-soft);
-    border:1.5px dashed var(--green-border);
-    border-radius:8px;
-    padding:18px 20px;
-    font-family:sans-serif;
-    font-size:.92rem;
-    color:var(--ink-soft);
+    background:var(--primary-light);
+    border:2px solid var(--primary); /* Línea continua */
+    border-radius:12px;
+    padding:24px;
+    font-size:1rem;
+    color:var(--primary-dark);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
   }
-  .pending-box strong{color:var(--petroleum);}
+  .pending-box strong{color:var(--primary-dark); font-weight: 700;}
+
+  /* TABLE — Estilo moderno y limpio (estilo Docs) */
   table{
     width:100%;
     border-collapse:collapse;
-    margin:14px 0 20px;
-    font-family:sans-serif;
-    font-size:.88rem;
+    margin:24px 0 32px;
+    font-size:.95rem;
+    border-radius: 8px;
+    overflow: hidden; /* Para que el radius funcione */
+    border: 1px solid var(--border);
   }
+
   th,td{
-    border:1px solid var(--line);
-    padding:9px 12px;
+    padding:16px 20px; /* Más padding */
     text-align:left;
-    vertical-align:top;
+    vertical-align:middle; /* Centrado vertical */
+    border-bottom: 1px solid var(--border);
   }
+
   th{
-    background:var(--green-soft);
-    color:var(--olive-dark);
-    font-weight:600;
+    background:var(--bg-soft);
+    color:var(--ink-main);
+    font-weight:700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
   }
-  ul,ol.content-list{padding-left:22px;}
-  li{margin-bottom:6px;}
+  
+  tr:last-child td {
+      border-bottom: none;
+  }
+  
+  /* Efecto hover en filas */
+  tbody tr:hover {
+      background-color: #FAFDFE;
+  }
+
+  ul,ol.content-list{
+      padding-left:26px;
+      margin-bottom: 20px;
+  }
+  li{margin-bottom:10px;}
+
+  /* LINKS — Volver al índice estilizado */
   .back-to-index{
     display:inline-block;
-    margin-top:10px;
-    font-family:sans-serif;
-    font-size:.8rem;
-    color:var(--petroleum);
+    margin-top:20px;
+    font-size:.9rem;
+    color:var(--primary);
     text-decoration:none;
-    border-bottom:1px solid transparent;
+    font-weight: 600;
+    padding: 8px 16px;
+    background: var(--primary-light);
+    border-radius: 8px;
+    transition: all 0.2s ease;
   }
-  .back-to-index:hover{border-bottom-color:var(--petroleum);}
+  .back-to-index:hover{
+      background: var(--primary);
+      color: #fff;
+  }
+
+  /* FLOATING INDEX — Más elegante */
   #float-index{
     position:fixed;
-    bottom:26px;
-    right:26px;
-    background:var(--petroleum);
+    bottom:32px;
+    right:32px;
+    background:var(--ink-main); /* Negro para contraste total */
     color:#fff;
-    font-family:sans-serif;
-    font-size:.82rem;
-    padding:12px 18px;
-    border-radius:30px;
+    font-size:.9rem;
+    padding:14px 24px;
+    border-radius:50px;
     text-decoration:none;
-    box-shadow:0 4px 14px rgba(0,0,0,.25);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     display:flex;
     align-items:center;
-    gap:6px;
+    gap:8px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 100;
   }
-  #float-index:hover{background:var(--olive);}
+  #float-index:hover{
+      background:var(--primary);
+      transform: translateY(-3px); /* Pequeño salto */
+  }
+
   .note{
-    font-family:sans-serif;
-    font-size:.82rem;
+    font-size:.9rem;
     color:var(--ink-soft);
     font-style:italic;
+    background: var(--bg-soft);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--border);
+    margin: 24px 0;
   }
-  @media(max-width:640px){
+
+  /* RESPONSIVE REFINADO */
+  @media(max-width:768px){
     .doc-head-inner{
       flex-direction:column;
-      align-items:flex-start;
-      padding:28px 6vw 26px;
-      gap:16px;
+      text-align: center;
+      padding:32px 24px;
+      gap:20px;
     }
-    .doc-title{font-size:1.6rem;}
-    main{padding:32px 6vw 100px;}
-    #float-index{right:14px;bottom:14px;padding:10px 14px;font-size:.75rem;}
+    .doc-head img {
+        width: 80px;
+        height: 80px;
+    }
+    .doc-title{font-size:2.1rem;}
+    
+    main{padding:40px 20px 80px;}
+    
+    #indice ol {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+    }
+    
+    section.block {
+        padding: 24px;
+        margin-bottom: 32px;
+    }
+    section.block h2 {
+        font-size: 1.6rem;
+    }
+    
+    th, td {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+
+    #float-index{right:20px;bottom:20px;padding:12px 20px;font-size:.8rem;}
   }
 </style>
 </head>
@@ -244,7 +388,7 @@
   <div class="doc-head-inner">
     <img src="https://scontent.fres4-1.fna.fbcdn.net/v/t39.30808-6/475693810_1045193247627934_7064218477404390767_n.jpg?stp=dst-jpg_tt6&cstp=mx1131x1600&ctp=s1131x1600&_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERPhMQhj7u-oSkvPV9L8tVk100jWLc15mTXTSNYtzXmdIk0eLKaRlHy-6SDMi5kVY&_nc_ohc=t5-lzUtONToQ7kNvwEBPgQB&_nc_oc=AdrLVlfxVHlxy4s02YaaS2MC4Sz77NpTjnUE34jpNI6CjQWukNepQrZnQjKyHmp0qoc&_nc_zt=23&_nc_ht=scontent.fres4-1.fna&_nc_gid=STeAJuuFCLvSnavY8loXvQ&_nc_ss=7b2a8&oh=00_AQAbiOyDc8-FRmNRJ2UHiQb4c52YbY57XdaA-uWiITi1jA&oe=6A507C33" alt="Logo EET UEGP 172 Deolindo Felipe Bittel">
     <div class="school-block">
-      <div id="current-date" class="utility"></div>
+      <div id="current-date"></div>
       <p class="school-name">EET UEGP 172 &ldquo;Deolindo Felipe Bittel&rdquo;</p>
       <h1 class="doc-title">Quemador de Aceite</h1>
       <p class="doc-subtitle">Cocina Solidaria de Aceite Gasificado</p>
@@ -256,7 +400,7 @@
 <main>
 
   <section id="indice">
-    <h2>Índice</h2>
+    <h2>Índice de Contenidos</h2>
     <ol>
       <li><a href="#resumen">Resumen</a> <span class="status-tag real">Completo</span></li>
       <li><a href="#introduccion">Introducción</a> <span class="status-tag real">Completo</span></li>
@@ -307,12 +451,16 @@
     <p>Se eligió este modelo por su mayor tolerancia a imperfecciones de construcción y ajuste, factor determinante dado el plazo disponible. El aceite gotea desde un tanque elevado (30–50 cm sobre el quemador) a través de un grifo de moto. Un forzador de aire inyecta aire en la base del quemador, mezclando el aceite con oxígeno para generar una llama estable.</p>
 
     <table>
-      <tr><th>Componente</th><th>Material sugerido</th><th>Notas</th></tr>
-      <tr><td>Tanque de aceite</td><td>Bidón de plástico resistente o lata</td><td>Capacidad: 5–10 L</td></tr>
-      <tr><td>Grifo</td><td>Grifo de combustible de moto</td><td>Regula el goteo (1–2 gotas por segundo)</td></tr>
-      <tr><td>Forzador de aire</td><td>Compresor de acuario, ventilador de PC o fuelle manual</td><td>Presión ideal: 0.5–1.5 bar (versión eléctrica); el fuelle manual es la alternativa sin electricidad</td></tr>
-      <tr><td>Quemador</td><td>Lata con recipiente central</td><td>Recibe el goteo; tapita de lata con perforaciones</td></tr>
-      <tr><td>Base y soporte</td><td>Chapa de hierro (50×50 cm) + 4 patas</td><td>Estructura estable, ángulos metálicos</td></tr>
+      <thead>
+          <tr><th>Componente</th><th>Material sugerido</th><th>Notas</th></tr>
+      </thead>
+      <tbody>
+          <tr><td>Tanque de aceite</td><td>Bidón de plástico resistente o lata</td><td>Capacidad: 5–10 L</td></tr>
+          <tr><td>Grifo</td><td>Grifo de combustible de moto</td><td>Regula el goteo (1–2 gotas por segundo)</td></tr>
+          <tr><td>Forzador de aire</td><td>Compresor de acuario, ventilador de PC o fuelle manual</td><td>Presión ideal: 0.5–1.5 bar (versión eléctrica); el fuelle manual es la alternativa sin electricidad</td></tr>
+          <tr><td>Quemador</td><td>Lata con recipiente central</td><td>Recibe el goteo; tapita de lata con perforaciones</td></tr>
+          <tr><td>Base y soporte</td><td>Chapa de hierro (50×50 cm) + 4 patas</td><td>Estructura estable, ángulos metálicos</td></tr>
+      </tbody>
     </table>
 
     <div class="note">Nota metodológica: dado que la construcción se realiza en maqueta de cartón (no con materiales definitivos), esta tabla representa la especificación técnica de referencia que la maqueta reproduce a escala y en material seguro para el aula.</div>
@@ -372,14 +520,19 @@
 
 </main>
 
-<a href="#indice" id="float-index">↑ Índice</a>
+<a href="#indice" id="float-index">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 15V1M8 1L1 8M8 1L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Ir al Índice
+</a>
 
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const today = new Date();
-    const dateStr = days[today.getDay()] + ' ' + today.getDate() + ' de ' + months[today.getMonth()] + ' de ' + today.getFullYear();
+    const dateStr = days[today.getDay()] + ', ' + today.getDate() + ' de ' + months[today.getMonth()] + ' de ' + today.getFullYear();
     document.getElementById('current-date').textContent = dateStr;
   });
 </script>
