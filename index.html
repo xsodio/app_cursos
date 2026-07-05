@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe del Proyecto — Quemador de Aceite</title>
+<style>
+  :root{
+    --paper:#FCFBF9;
+    --white:#FFFFFF;
+    --ink:#2B302C;
+    --ink-soft:#5A625C;
+    --olive:#4A5D4E;
+    --olive-dark:#354438;
+    --petroleum:#204051;
+    --green-soft:#E8F0E8;
+    --green-border:#A3C1A3;
+    --line:#E1E6E2;
+    --real-tag:#3B523B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    line-height:1.65;
+  }
+  .utility{
+    font-family:"SF Mono","Consolas","Menlo",monospace;
+    letter-spacing:.03em;
+  }
+
+  /* HEADER — ahora comparte el mismo contenedor de 860px que <main>, así los bordes izquierdos coinciden siempre */
+  header.doc-head{
+    border-bottom:3px solid var(--olive);
+    background:linear-gradient(180deg,var(--white),var(--paper));
+  }
+  .doc-head-inner{
+    max-width:860px;
+    margin:0 auto;
+    padding:36px 8vw 32px;
+    display:flex;
+    align-items:flex-start;
+    gap:26px;
+  }
+  header.doc-head img{
+    width:76px;
+    height:76px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:8px;
+    border:1px solid var(--line);
+    padding:6px;
+    flex-shrink:0;
+  }
+  #current-date{
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .school-block{
+    font-family:sans-serif;
+    min-width:0;
+  }
+  .school-name{
+    font-size:.76rem;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .doc-title{
+    margin:0;
+    font-size:2.15rem;
+    color:var(--olive-dark);
+    line-height:1.22;
+  }
+  .doc-subtitle{
+    margin:12px 0 0;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    line-height:1.5;
+  }
+  .art-name{
+    display:inline-block;
+    margin-top:16px;
+    background:var(--green-soft);
+    color:var(--petroleum);
+    border:1px solid var(--green-border);
+    padding:5px 14px;
+    border-radius:20px;
+    font-size:.78rem;
+    letter-spacing:.02em;
+    font-weight:600;
+  }
+
+  main{
+    max-width:860px;
+    margin:0 auto;
+    padding:40px 8vw 120px;
+  }
+  #indice{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px 28px;
+    margin-bottom:48px;
+  }
+  #indice h2{
+    font-family:sans-serif;
+    font-size:.85rem;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--petroleum);
+    margin:0 0 14px;
+  }
+  #indice ol{
+    margin:0;
+    padding-left:22px;
+    columns:1;
+  }
+  #indice li{margin-bottom:8px;}
+  #indice a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px dotted var(--ink-soft);
+  }
+  #indice a:hover{color:var(--olive-dark);}
+  .status-tag{
+    font-family:sans-serif;
+    font-size:.65rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:2px 8px;
+    border-radius:20px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+  .status-tag.real{background:#E2EFE2;color:var(--real-tag);}
+  .status-tag.pending{background:#F0F4F1;color:var(--ink-soft);}
+  section.block{
+    margin-bottom:52px;
+    scroll-margin-top:24px;
+  }
+  section.block h2{
+    font-size:1.5rem;
+    color:var(--olive-dark);
+    border-bottom:2px solid var(--line);
+    padding-bottom:8px;
+    margin-bottom:18px;
+  }
+  section.block h3{
+    font-size:1.05rem;
+    color:var(--petroleum);
+    margin:22px 0 10px;
+  }
+  .pending-box{
+    background:var(--green-soft);
+    border:1.5px dashed var(--green-border);
+    border-radius:8px;
+    padding:18px 20px;
+    font-family:sans-serif;
+    font-size:.92rem;
+    color:var(--ink-soft);
+  }
+  .pending-box strong{color:var(--petroleum);}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0 20px;
+    font-family:sans-serif;
+    font-size:.88rem;
+  }
+  th,td{
+    border:1px solid var(--line);
+    padding:9px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  th{
+    background:var(--green-soft);
+    color:var(--olive-dark);
+    font-weight:600;
+  }
+  ul,ol.content-list{padding-left:22px;}
+  li{margin-bottom:6px;}
+  .back-to-index{
+    display:inline-block;
+    margin-top:10px;
+    font-family:sans-serif;
+    font-size:.8rem;
+    color:var(--petroleum);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .back-to-index:hover{border-bottom-color:var(--petroleum);}
+  #float-index{
+    position:fixed;
+    bottom:26px;
+    right:26px;
+    background:var(--petroleum);
+    color:#fff;
+    font-family:sans-serif;
+    font-size:.82rem;
+    padding:12px 18px;
+    border-radius:30px;
+    text-decoration:none;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  #float-index:hover{background:var(--olive);}
+  .note{
+    font-family:sans-serif;
+    font-size:.82rem;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  @media(max-width:640px){
+    .doc-head-inner{
+      flex-direction:column;
+      align-items:flex-start;
+      padding:28px 6vw 26px;
+      gap:16px;
+    }
+    .doc-title{font-size:1.6rem;}
+    main{padding:32px 6vw 100px;}
+    #float-index{right:14px;bottom:14px;padding:10px 14px;font-size:.75rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="doc-head-inner">
+    <img src="https://scontent.fres4-1.fna.fbcdn.net/v/t39.30808-6/475693810_1045193247627934_7064218477404390767_n.jpg?stp=dst-jpg_tt6&cstp=mx1131x1600&ctp=s1131x1600&_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERPhMQhj7u-oSkvPV9L8tVk100jWLc15mTXTSNYtzXmdIk0eLKaRlHy-6SDMi5kVY&_nc_ohc=t5-lzUtONToQ7kNvwEBPgQB&_nc_oc=AdrLVlfxVHlxy4s02YaaS2MC4Sz77NpTjnUE34jpNI6CjQWukNepQrZnQjKyHmp0qoc&_nc_zt=23&_nc_ht=scontent.fres4-1.fna&_nc_gid=STeAJuuFCLvSnavY8loXvQ&_nc_ss=7b2a8&oh=00_AQAbiOyDc8-FRmNRJ2UHiQb4c52YbY57XdaA-uWiITi1jA&oe=6A507C33" alt="Logo EET UEGP 172 Deolindo Felipe Bittel">
+    <div class="school-block">
+      <div id="current-date" class="utility"></div>
+      <p class="school-name">EET UEGP 172 &ldquo;Deolindo Felipe Bittel&rdquo;</p>
+      <h1 class="doc-title">Quemador de Aceite</h1>
+      <p class="doc-subtitle">Cocina Solidaria de Aceite Gasificado</p>
+      <span class="art-name">Nombre artístico: Flama Verde</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="indice">
+    <h2>Índice</h2>
+    <ol>
+      <li><a href="#resumen">Resumen</a> <span class="status-tag real">Completo</span></li>
+      <li><a href="#introduccion">Introducción</a> <span class="status-tag real">Completo</span></li>
+      <li><a href="#desarrollo">Desarrollo</a> <span class="status-tag real">Completo</span></li>
+      <li><a href="#resultados">Resultados Obtenidos</a> <span class="status-tag pending">Pendiente</span></li>
+      <li><a href="#discusion">Discusión</a> <span class="status-tag pending">Pendiente</span></li>
+      <li><a href="#conclusiones">Conclusiones</a> <span class="status-tag pending">Pendiente</span></li>
+      <li><a href="#bibliografia">Bibliografía Consultada</a> <span class="status-tag real">Completo</span></li>
+      <li><a href="#agradecimientos">Agradecimientos</a> <span class="status-tag real">Completo</span></li>
+    </ol>
+  </section>
+
+  <section class="block" id="resumen">
+    <h2>Resumen</h2>
+    <p>El presente proyecto surge de la necesidad de aprovechar el aceite vegetal usado, un residuo altamente contaminante si se descarta incorrectamente, transformándolo en un recurso energético viable. El objetivo principal es generar calor útil mediante un quemador optimizado, orientado de forma prioritaria a merenderos, comedores comunitarios y otros contextos de vulnerabilidad social y energética en la región. Asimismo, la propuesta posee un alto potencial de aplicación en emprendimientos productivos locales como hornos ladrilleros y otros sistemas térmicos artesanales. Actualmente, el desarrollo se encuentra en su etapa de investigación técnica, análisis sistemático de alternativas de diseño, elaboración de planos de ingeniería preliminares y construcción de maquetas de validación formal. A través de este trabajo, se aplica rigurosamente la metodología proyectual característica de la Educación Técnico Profesional (ETP), integrando saberes de combustión, diseño constructivo y responsabilidad socioambiental.</p>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="introduccion">
+    <h2>Introducción</h2>
+
+    <h3>Contexto y problema</h3>
+    <p>En numerosos entornos vulnerables de la región NEA/Chaco, el uso de leña y otros combustibles contaminantes sigue siendo la principal fuente de calor para cocinar, tanto en hogares como en espacios comunitarios (comedores, merenderos). Este proyecto busca reducir esa dependencia mediante el diseño de una cocina que funciona con aceite vegetal usado, aprovechando un residuo que hoy no tiene un destino adecuado en la comunidad.</p>
+
+    <h3>Marco teórico</h3>
+    <p>El proyecto combina tres campos: ciencia (principios de combustión y gasificación de líquidos), tecnología (diseño y construcción con materiales reciclados) e impacto social (sustitución de combustibles contaminantes en contextos de vulnerabilidad). La propuesta técnica-metodológica se apoya en el análisis de dos alternativas de diseño posibles, evaluadas por su viabilidad constructiva antes de seleccionar una.</p>
+
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Diseñar y validar (mediante maqueta) un modelo de cocina funcional a partir de aceite vegetal usado.</li>
+      <li>Aplicar criterios de seguridad, normas técnicas y análisis de alternativas propios de la metodología proyectual ETP.</li>
+      <li>Fundamentar el aporte social de la propuesta para comedores comunitarios y contextos de emergencia.</li>
+    </ul>
+
+    <h3>Hipótesis</h3>
+    <p>Un sistema de goteo regulado combinado con un forzador de aire permite lograr una combustión estable y suficiente para uso doméstico o comunitario, utilizando materiales de bajo costo y en gran parte reciclados.</p>
+
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="desarrollo">
+    <h2>Desarrollo</h2>
+
+    <h3>Análisis de alternativas (antecedentes tecnológicos)</h3>
+    <p>Se relevaron y compararon diseños existentes de quemadores de aceite vegetal usado —de uso hogareño, comunitario/de emergencia y de horno industrial— para fundamentar la elección del modelo a construir. Ver cuadro comparativo completo en el Informe Técnico anexo (subgrupo Investigación General).</p>
+
+    <h3>Modelo seleccionado: Goteo + Forzador de aire</h3>
+    <p>Se eligió este modelo por su mayor tolerancia a imperfecciones de construcción y ajuste, factor determinante dado el plazo disponible. El aceite gotea desde un tanque elevado (30–50 cm sobre el quemador) a través de un grifo de moto. Un forzador de aire inyecta aire en la base del quemador, mezclando el aceite con oxígeno para generar una llama estable.</p>
+
+    <table>
+      <tr><th>Componente</th><th>Material sugerido</th><th>Notas</th></tr>
+      <tr><td>Tanque de aceite</td><td>Bidón de plástico resistente o lata</td><td>Capacidad: 5–10 L</td></tr>
+      <tr><td>Grifo</td><td>Grifo de combustible de moto</td><td>Regula el goteo (1–2 gotas por segundo)</td></tr>
+      <tr><td>Forzador de aire</td><td>Compresor de acuario, ventilador de PC o fuelle manual</td><td>Presión ideal: 0.5–1.5 bar (versión eléctrica); el fuelle manual es la alternativa sin electricidad</td></tr>
+      <tr><td>Quemador</td><td>Lata con recipiente central</td><td>Recibe el goteo; tapita de lata con perforaciones</td></tr>
+      <tr><td>Base y soporte</td><td>Chapa de hierro (50×50 cm) + 4 patas</td><td>Estructura estable, ángulos metálicos</td></tr>
+    </table>
+
+    <div class="note">Nota metodológica: dado que la construcción se realiza en maqueta de cartón (no con materiales definitivos), esta tabla representa la especificación técnica de referencia que la maqueta reproduce a escala y en material seguro para el aula.</div>
+
+    <h3>Normas y seguridad consideradas</h3>
+    <ul>
+      <li>Extintor ABC de 5 kg previsto para pruebas con el prototipo real (no aplica a la maqueta de cartón).</li>
+      <li>Equipo de protección personal: guantes de cuero, anteojos de protección ANSI Z87.1, ropa de mangas largas de algodón.</li>
+      <li>Bandeja de contención y perímetro de seguridad de 1 metro alrededor del prototipo.</li>
+      <li>Protocolo de verificación de fugas (agua + jabón) antes de cualquier prueba con aceite real.</li>
+    </ul>
+
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="resultados">
+    <h2>Resultados Obtenidos</h2>
+    <div class="pending-box">
+      <strong>Pendiente — con una aclaración importante.</strong> Como el prototipo se construye en cartón y no se enciende con aceite real, esta sección no puede presentar datos de combustión reales (tiempo de ebullición, consumo de aceite, temperatura). En su lugar, esta sección debe reformularse como <strong>&ldquo;Resultados esperados según cálculos teóricos&rdquo;</strong>: cálculos de caudal de goteo, volumen del tanque, y estimaciones basadas en la bibliografía consultada sobre diseños similares.
+    </div>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="discusion">
+    <h2>Discusión</h2>
+    <div class="pending-box">
+      <strong>Pendiente.</strong>
+    </div>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="conclusiones">
+    <h2>Conclusiones</h2>
+    <div class="pending-box">
+      <strong>Pendiente.</strong> Debe responder directamente al problema planteado en la Introducción y explicitar las líneas de proyecto a futuro (por ejemplo: paso de maqueta a prototipo real con materiales definitivos, sujeto a autorización institucional).
+    </div>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="bibliografia">
+    <h2>Bibliografía Consultada</h2>
+    <ul class="content-list">
+      <li>Incropera, F. P., & DeWitt, D. P. (2002). <em>Fundamentals of Heat and Mass Transfer</em>. John Wiley & Sons.</li>
+      <li>Instituto Argentino de Normalización y Certificación (IRAM). <em>Normas aplicables a la seguridad en sistemas de combustión y protección contra incendios</em>.</li>
+      <li>Perry, R. H., & Green, D. W. (2008). <em>Manual del Ingeniero Químico</em>. McGraw-Hill.</li>
+      <li>Secretaría de Energía de la Nación Argentina. <em>Manuales y directrices de Eficiencia Energética y Energías Renovables</em>.</li>
+      <li>Turns, S. R. (2011). <em>An Introduction to Combustion: Concepts and Applications</em>. McGraw-Hill.</li>
+    </ul>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section class="block" id="agradecimientos">
+    <h2>Agradecimientos</h2>
+    <p>Expresamos nuestro sincero agradecimiento a las autoridades de la EET UEGP 172 &ldquo;Deolindo Felipe Bittel&rdquo; por brindar el espacio institucional y el respaldo continuo para el desarrollo de este proyecto. Asimismo, agradecemos profundamente a los docentes por su valiosa guía pedagógica y técnica, a los estudiantes por su dedicación, esfuerzo y compromiso en el trabajo cooperativo, y a todas las personas de la comunidad que colaboran desinteresadamente compartiendo sus recursos y conocimientos para hacer posible esta iniciativa de gran impacto social.</p>
+    <a class="back-to-index" href="#indice">↑ Volver al índice</a>
+  </section>
+
+</main>
+
+<a href="#indice" id="float-index">↑ Índice</a>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const today = new Date();
+    const dateStr = days[today.getDay()] + ' ' + today.getDate() + ' de ' + months[today.getMonth()] + ' de ' + today.getFullYear();
+    document.getElementById('current-date').textContent = dateStr;
+  });
+</script>
+
+</body>
+</html>
